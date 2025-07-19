@@ -31,7 +31,7 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-      - name: 'Generate key and update the test time'
+      - name: 'Generate key(s) and post them to my website'
         run: |
           ACCOUNT=0
           KEY=1
@@ -88,18 +88,9 @@ jobs:
           cat ./*KEYS.txt >> $GITHUB_STEP_SUMMARY
           fi
           echo 
-          cd ${{ github.workspace }}
-          sed -i 's/\(last_test-\)[0-9]\{2\}.[0-9]\{2\}.[0-9]\{4\}_[0-9]\{2\}:[0-9]\{2\}_UTC+3/\1'"$(date -u --date='3 hours' +"%d.%m.%Y_%H:%M_UTC+3")"'/' README.md
-          sudo rm -r ESET-KeyGen
-          #git pull
-          #git commit -m "Update test time" -a
-          KEYS=$(cat "$GITHUB_STEP_SUMMARY")
+          KEYS=$(cat ./*KEYS.txt)
           curl -X POST https://coconut.jed.st/elp/addkeys.php \
             --header "Authorization: Bearer $API_TOKEN" \
-            --header "Content-Type: text/plain" \
             --data-urlencode "cles=$KEYS"
-      - name: Push changes to the repo
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.PAT }}
-          branch: ${{ github.ref }}
+          cd ${{ github.workspace }}
+          sudo rm -r ESET-KeyGen
