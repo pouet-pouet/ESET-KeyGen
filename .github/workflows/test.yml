@@ -24,6 +24,7 @@ jobs:
   Test:
     runs-on: ubuntu-latest
     env:
+      URL: ${{ secrets.URL }}
       API_TOKEN: ${{ secrets.API_TOKEN }}
     steps:
       - name: 'Checkout Repo'
@@ -89,7 +90,7 @@ jobs:
           fi
           echo 
           KEYS=$(cat ./*KEYS.txt)
-          curl -X POST https://coconut.jed.st/elp/addkeys.php \
+          curl -X POST $URL \
             --header "Authorization: Bearer $API_TOKEN" \
             --data-urlencode "cles=$KEYS"
           cd ${{ github.workspace }}
