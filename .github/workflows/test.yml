@@ -88,8 +88,6 @@ jobs:
           cat ./*KEYS.txt >> $GITHUB_STEP_SUMMARY
           fi
           echo 
-      - name: 'Post generated keys then clean'
-        run: |        
           KEYS=$(cat ./*KEYS.txt)
           curl -X POST https://coconut.jed.st/elp/addkeys.php \
             --header "Authorization: Bearer $API_TOKEN" \
