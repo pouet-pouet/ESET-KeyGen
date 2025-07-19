@@ -33,7 +33,7 @@ jobs:
         run: |
           ACCOUNT=0
           KEY=1
-          SMALL_BUSINESS_KEY=1
+          SMALL_BUSINESS_KEY=0
           VPN=0
           EMAIL_API="${{ github.event.inputs.mail }}"
           if [ -z "$EMAIL_API" ]; then
