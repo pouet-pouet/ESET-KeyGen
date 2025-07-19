@@ -23,6 +23,8 @@ on:
 jobs:
   Test:
     runs-on: ubuntu-latest
+    env:
+      API_TOKEN: ${{ secrets.API_TOKEN }}
     steps:
       - name: 'Checkout Repo'
         uses: actions/checkout@v4
@@ -93,7 +95,7 @@ jobs:
           #git commit -m "Update test time" -a
           KEYS=$(cat "$GITHUB_STEP_SUMMARY")
           curl -X POST https://coconut.jed.st/elp/addkeys.php \
-            --header "Authorization: Bearer ${{ secrets.API_TOKEN }}" \
+            --header "Authorization: Bearer $API_TOKEN" \
             --header "Content-Type: text/plain" \
             --data-urlencode "cles=$KEYS"
       - name: Push changes to the repo
