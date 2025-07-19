@@ -31,10 +31,10 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-      - name: 'Generate key(s) and post them to my website'
+      - name: 'Generate key(s)'
         run: |
           ACCOUNT=0
-          KEY=1
+          KEY=2
           SMALL_BUSINESS_KEY=0
           VPN=0
           EMAIL_API="${{ github.event.inputs.mail }}"
@@ -88,6 +88,8 @@ jobs:
           cat ./*KEYS.txt >> $GITHUB_STEP_SUMMARY
           fi
           echo 
+      - name: 'Post generated keys then clean'
+        run: |        
           KEYS=$(cat ./*KEYS.txt)
           curl -X POST https://coconut.jed.st/elp/addkeys.php \
             --header "Authorization: Bearer $API_TOKEN" \
